@@ -1,12 +1,7 @@
 version: 2
-
-orbs:
-  python: circleci/python@2.0.3
-  heroku: circleci/heroku@1.2.6
   
 jobs:
   build:
-    working_directory: ~/app
     docker:
       - image: circleci/python:3.6.4
     steps:
@@ -14,45 +9,22 @@ jobs:
       - run:
           name: Install python and dependencies
           command: |
-            python -m pip install --upgrade pip
+            python3 -m venv venv
+            . venv/bin/activate
             pip install -r requirements.txt
       - run:
           name: Run unit test
           command: |
             python test_application.py
-      - restore_cache:
-          keys:
-            - v1-{{ .Branch }}
-          paths:
-            - ~/caches/app.tar
-      - run:
-          name: Load Docker image layer cache
-          command: |
-            set +o pipefail
-            docker load -i ~/caches/app.tar | true
-      - run:
-          name: Build application Docker image
-          command: |
-            docker build --cache-from=app -t app .
-      - run:
-          name: Save Docker image layer cache
-          command: |
-            mkdir -p ~/caches
-            docker save -o ~/caches/app.tar app
-      - save_cache:
-          key: v1-{{ .Branch }}-{{ epoch }}
-          paths:
-            - ~/caches/app.tar
      
   push-to-dockerhub:
-    working_directory: ~/app
     docker:
       - image: docker:17.05.0-ce-git
     steps:
       - deploy:
           name: Push application Docker image
           command: |
-            docker tag app "${DOCKER_USERNAME}/${CIRCLE_PROJECT_REPONAME}:${CIRCLE_SHA1}"
+            docker build -t "${DOCKER_USERNAME}/${CIRCLE_PROJECT_REPONAME}:${CIRCLE_SHA1}"
             docker login -u \$DOCKER_USERNAME -p "$DOCKER_PASSWORD"
             docker push "${DOCKER_USERNAME}/${CIRCLE_PROJECT_REPONAME}:${CIRCLE_SHA1}"
             
