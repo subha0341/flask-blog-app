@@ -10,8 +10,8 @@ jobs:
           name: Install python and dependencies
           command: |
             python --version
-            sudo pip install virtualenv	
-            python3 -m venv venv
+            python -m ensurepip --upgrade	
+            python -m venv venv
             . venv/bin/activate
             pip install -r requirements.txt
       - run:
