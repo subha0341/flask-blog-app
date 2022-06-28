@@ -6,12 +6,11 @@ orbs:
   
 jobs:
   build:
-    working_directory: /app
+    working_directory: 
     docker:
-      - image: docker:17.05.0-ce-git
+      - image: circleci/python:3.6.4
     steps:
       - checkout
-      - setup_remote_docker
       - run:
           name: Install python and dependencies
           command: |
