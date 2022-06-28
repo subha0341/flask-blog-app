@@ -3,4 +3,4 @@ WORKDIR ~/project
 COPY requirements.txt requirements.txt
 RUN pip install -r requirements.txt
 COPY . .
-CMD [ "python3", "application.py"]
+CMD [ "python3", "application.py", "--host==0.0.0.0", "-p 5000"]
