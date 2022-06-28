@@ -21,8 +21,11 @@ jobs:
      
   push-to-dockerhub:
     docker:
-      - image: docker:17.05.0-ce-git
+      - image: cimg/base:2022.06
     steps:
+      - checkout
+      - setup_remote_docker:
+          version: 19.03.13
       - deploy:
           name: Push application Docker image
           command: |
