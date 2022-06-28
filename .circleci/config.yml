@@ -6,7 +6,7 @@ jobs:
     steps:
       # Step 1: obtain repo from GitHub
       - checkout
-      # Step 2: create virtual env and install dependencies
+      # Step 2: Install Python and dependencies
       - run:
           name: create venv and install dependencies
           command: |
@@ -29,7 +29,9 @@ jobs:
       - deploy:
           name: Push application Docker image
           command: |
-            source env/bin/activate
+            # source env/bin/activate
+            ls
+            cd ../
             ls
             # docker build -t "${DOCKERHUB_USERNAME}/${CIRCLE_PROJECT_REPONAME}:${CIRCLE_SHA1}" .
             # docker login -u "${DOCKERHUB_USERNAME}" -p "${DOCKERHUB_PAT}"
