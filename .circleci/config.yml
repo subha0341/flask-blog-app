@@ -10,7 +10,7 @@ jobs:
           name: Install python and dependencies
           command: |
             python --version
-            python -m ensurepip --upgrade	
+            pip install virtualenv	
             python -m venv venv
             . venv/bin/activate
             pip install -r requirements.txt
