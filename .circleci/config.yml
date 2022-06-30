@@ -38,8 +38,16 @@ jobs:
     docker:
       - image: cimg/base:2022.06
     steps:
-      - install-yq
-
+      - run:
+          name: Install YQ CLI
+          command: |
+            wget https://github.com/mikefarah/yq/releases/download/v4.18.1/yq_linux_amd64 -O /usr/local/bin/yq &&\
+            chmod a+x /usr/local/bin/yq
+            yq --version
+      - run:
+          name: Clone argocd-manifests
+          command: |
+            git clone "https://${GITHUB_PAT}@github.com/subha0341/argocd-manifests.git"
             
 workflows:
   version: 2
