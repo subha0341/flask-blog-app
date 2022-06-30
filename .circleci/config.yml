@@ -51,9 +51,9 @@ jobs:
             git config --global user.name "subha0341"
             git clone "https://${GITHUB_PAT}@github.com/subha0341/argocd-manifests.git"
             cd argocd-manifests/manifests
-            yq -i '.spec.template.spec.containers[0].image="${DOCKERHUB_USERNAME}/${CIRCLE_PROJECT_REPONAME}:${CIRCLE_SHA1}"' deployment.yml
+            yq -i '.spec.template.spec.containers[0].image="'${DOCKERHUB_USERNAME}/${CIRCLE_PROJECT_REPONAME}:${CIRCLE_SHA1}'"' deployment.yml
             git add .
-            git commit -m 'updated tag "${CIRCLE_SHA1}"'
+            git commit -m 'updated tag "'${CIRCLE_SHA1}'"'
             git push "https://${GITHUB_PAT}@github.com/subha0341/argocd-manifests.git" main
             
 workflows:
