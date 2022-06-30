@@ -49,6 +49,6 @@ workflows:
           filters:
             branches:
               only: main
-      - push-to-dockerhub:
+      - update-yaml-with-details:
           requires:
             - build
