@@ -19,20 +19,27 @@ jobs:
             source env/bin/activate
             python test_application.py
      
-  push-to-dockerhub:
+  # push-to-dockerhub:
+  #   docker:
+  #     - image: cimg/base:2022.06
+  #   steps:
+  #     - checkout
+  #     - setup_remote_docker:
+  #         docker_layer_caching: true
+  #         version: 19.03.13
+  #     - deploy:
+  #         name: Push application Docker image
+  #         command: |
+  #           docker build -t "${DOCKERHUB_USERNAME}/${CIRCLE_PROJECT_REPONAME}:${CIRCLE_SHA1}" .
+  #           docker login -u "${DOCKERHUB_USERNAME}" -p "${DOCKERHUB_PAT}"
+  #           docker push "${DOCKERHUB_USERNAME}/${CIRCLE_PROJECT_REPONAME}:${CIRCLE_SHA1}"
+  
+  update-yaml-with-details:
     docker:
       - image: cimg/base:2022.06
     steps:
-      - checkout
-      - setup_remote_docker:
-          docker_layer_caching: true
-          version: 19.03.13
-      - deploy:
-          name: Push application Docker image
-          command: |
-            docker build -t "${DOCKERHUB_USERNAME}/${CIRCLE_PROJECT_REPONAME}:${CIRCLE_SHA1}" .
-            docker login -u "${DOCKERHUB_USERNAME}" -p "${DOCKERHUB_PAT}"
-            docker push "${DOCKERHUB_USERNAME}/${CIRCLE_PROJECT_REPONAME}:${CIRCLE_SHA1}"
+      - install-yq
+
             
 workflows:
   version: 2
