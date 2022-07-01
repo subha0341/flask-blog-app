@@ -51,7 +51,7 @@ jobs:
             git config --global user.name "subha0341"
             git clone "https://${GITHUB_PAT}@github.com/subha0341/helm-charts.git"
             cd helm-charts
-            yq -i '.deployment.image.tag="'${CIRCLE_SHA1}'"' values.yml
+            yq -i '.deployment.image.tag="'${CIRCLE_SHA1}'"' values.yaml
             git add .
             git commit -m "updated tag $CIRCLE_SHA1"
             git push "https://${GITHUB_PAT}@github.com/subha0341/helm-charts.git" main
