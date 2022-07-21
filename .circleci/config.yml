@@ -64,13 +64,13 @@ workflows:
           filters:
             branches:
               only: main
-      - push-to-dockerhub:
-          requires:
-            - build
       - gate-to-prod:
           type: approval
           requires:
             - build
+      - push-to-dockerhub:
+          requires:
+            - gate-to-prod
       - update-yaml-with-details:
           requires:
             - push-to-dockerhub
