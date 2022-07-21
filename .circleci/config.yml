@@ -67,6 +67,10 @@ workflows:
       - push-to-dockerhub:
           requires:
             - build
+      - gate-to-prod:
+          type: approval
+          requires:
+            - build
       - update-yaml-with-details:
           requires:
             - push-to-dockerhub
