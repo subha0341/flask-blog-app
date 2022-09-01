@@ -17,7 +17,7 @@ jobs:
           name: Run unit test
           command: |
             source env/bin/activate
-            python test1_application.py
+            python test2_application.py
      
   push-to-dockerhub:
     docker:
